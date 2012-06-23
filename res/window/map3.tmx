@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
+<map version="1.0" orientation="orthogonal" width="30" height="25" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="Collision" tilewidth="16" tileheight="16">
+  <image source="collision.png" width="16" height="16"/>
+ </tileset>
+ <tileset firstgid="2" name="Shinies" tilewidth="16" tileheight="16">
+  <image source="tiles.png" width="64" height="48"/>
+ </tileset>
+ <layer name="Collision" width="30" height="25">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA2NgGAWjYBSMgpEDGInAo/aObHsHwt2j9o7ai88NlKTrUXuHl70A77BfvbgLAAA=
+  </data>
+ </layer>
+ <layer name="Shinies" width="30" height="25">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+2T4QqAMAiEB7WKQe//uv3ZgYnmrI2IPDim+7EP5ZZSKBQK/UdT9UzOzO4Kcw+t1ZtQ4xzBXRoc3LNoJqSsaNoNW7Nq+UDtYXm41r7e4npYo7ieuZ9yacbAxttSDnmvsS0uzRjnXmUS/V0u3znlev5xDy7YX+AeBxCe3LgLAAA=
+  </data>
+ </layer>
+</map>

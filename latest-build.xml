@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project 'moose' with libraries in sub-folder.">
+	<!--ANT 1.7 is required-->
+	<target name="create_run_jar">
+		<jar destfile="/Users/tompenney/Desktop/moose/moose.jar">
+			<manifest>
+				<attribute name="Main-Class" value="com.bluebitgames.moose.Game"/>
+				<attribute name="Class-Path" value=". lib/jars/lwjgl.jar lib/jars/slick.jar"/>
+			</manifest>
+			<fileset dir="/Users/tompenney/Dropbox/Java/moose/bin"/>
+		</jar>
+		<delete dir="/Users/tompenney/Desktop/moose/lib"/>
+		<mkdir dir="/Users/tompenney/Desktop/moose/lib"/>
+		<copy todir="/Users/tompenney/Desktop/moose/res">
+			<fileset dir="/Users/tompenney/Dropbox/Java/moose/res"/>
+		  </copy>
+		<copy todir="/Users/tompenney/Desktop/moose/lib">
+			<fileset dir="/Users/tompenney/Dropbox/Java/moose/lib"/>
+		  </copy>
+	</target>
+</project>

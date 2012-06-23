@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
+<map version="1.0" orientation="orthogonal" width="30" height="50" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="Collision" tilewidth="16" tileheight="16">
+  <image source="collision.png" width="16" height="16"/>
+ </tileset>
+ <tileset firstgid="2" name="Shinies" tilewidth="16" tileheight="16">
+  <image source="tiles.png" width="64" height="48"/>
+ </tileset>
+ <layer name="Collision" width="30" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+2TsQrAIAwF4+LQ//9gJ6HaVNOS0BLu4A1C8i6LIgD+1K8PAAAAAACAgUNJFq/m8PbOPVbnG6+ls2yC99p9fq96IhPhtXR6ejt4Y7x9J5N393//4K03kYczqzltB29ObwOyCtdNcBcAAA==
+  </data>
+ </layer>
+ <layer name="Shinies" width="30" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+2TSwrAIAxEhX5svf+B60YIwUYlHwqdgWA25uk4pgRBEARBEARFq7AV3BhuIRV9jihuYb2GG+3TiKv1sCTZk69xLVhR2ZO4nmf5E5fP3GrtZD1Yb5lZWrnWRdab9RK358msh+egRv+351/PQw135h75xUMNV8rAaN5qlhuXZqGXAU/uzExL7spMC257w2hue0MPLv9rNKd8jyWX/zWa07YHgjz0ACJJduVwFwAA
+  </data>
+ </layer>
+</map>
