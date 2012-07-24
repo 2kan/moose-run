@@ -27,7 +27,7 @@ public class Play extends BasicGameState {
 	public static Polygon playerPoly;
 	public static int chunkLoad		= 30;
 	public static int chunksLoaded	= 0;
-	public static BlockMap map[]	= new BlockMap[chunkLoad*5];
+	public static BlockMap map[]	= new BlockMap[chunkLoad];
 	public static BlockMap chunk1[]	= new BlockMap[chunkLoad];
 	public static BlockMap chunk2[]	= new BlockMap[chunkLoad];
 	
@@ -39,6 +39,8 @@ public class Play extends BasicGameState {
 	}
 	
 	int extraJumps	= 3;
+	int oldChunkPixels	= 0;
+	int rendered	= 0;
 	
 	public static boolean entityCollisionWith() throws SlickException {
 		//System.out.println("Collision check playerX:"+playerX);
@@ -80,23 +82,28 @@ public class Play extends BasicGameState {
 	public void loadChunks() throws SlickException {
 		int start	= 1;
 		if(!initialized) {
-			chunk1[0]	= new BlockMap("res/window/map1.tmx", 0);
+			chunk1[0]	= new BlockMap("res/window/map1.tmx", oldChunkPixels);
 			chunksLoaded	= 0;
 			initialized	= true;
-		}
+		} /*else {
+			chunk1[0]	= new BlockMap("res/window/map2.tmx", oldChunkPixels + BLOCK_WIDTH);
+		}*/
 		
 		Random r	= new Random();
 		System.out.println(chunksLoaded);
 		for(int i=start; i<chunkLoad; i++) {
 			int id	= r.nextInt(4)+2;
-			chunk1[i]	= new BlockMap("res/window/map"+id+".tmx", i*BLOCK_WIDTH);
+			chunk1[i]	= new BlockMap("res/window/map"+id+".tmx", oldChunkPixels + (i * (BLOCK_WIDTH)));
 		}
-		map	= chunk1;
 		chunksLoaded++;
+		oldChunkPixels	= (((chunksLoaded-1) * (chunkLoad * BLOCK_WIDTH)));
+		map	= chunk1;
 	}
 	
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 		gc.setVSync(true); // Prevent screen-tearing
+		if(rendered < 2)
+		rendered++;
 		
 		// Info
 		/*g.drawString("playerX: "+playerX+"  playerY: "+playerY, 10, 30);
@@ -107,10 +114,13 @@ public class Play extends BasicGameState {
 		// Draw current score
 		g.drawString("Score: "+score, 10, 30);
 		g.drawString(extraJumps+" Super Jumps", 10, 50);
+		/*g.drawString("playerX:"+playerX, 10, 70);
+		g.drawString(""+(oldChunkPixels), 10, 90);*/
 		
 		//int xStart	= (chunksLoaded-1)*(chunkLoad*BLOCK_WIDTH*16);
 		for(int i=0; i<chunkLoad; i++) {
-			map[i].tmap.render((i * BLOCK_WIDTH * 16) + (cameraX), 0);
+			map[i].tmap.render((((chunksLoaded-1) * chunkLoad * BLOCK_WIDTH * 16) +
+					(i * (BLOCK_WIDTH * 16))) + (cameraX), 0);
 			//g.drawString(""+i, (xStart+(cameraX)), cameraY);
 			//xStart	+= (BLOCK_WIDTH) * 16;
 		}
@@ -168,6 +178,12 @@ public class Play extends BasicGameState {
 			}
 		}
 		
+		// Restart game
+		if(gc.getInput().isKeyPressed(Input.KEY_R)) {
+			gameover	= true;
+			sbg.enterState(Game.go);
+		}
+		
 		if(playerY > Game.SCREEN_HEIGHT-40 && extraJumps > 0) {
 			superJump	= true;
 			jumping		= true;
@@ -213,18 +229,21 @@ public class Play extends BasicGameState {
 		cameraX -= speed*3;
 		speed	= speed * 1.00015;
 		
-		// Gameover conditions
+		//Gameover conditions
 		if(playerY > Game.SCREEN_HEIGHT + 50 || playerX < (-1*cameraX)-60) {
 			gameover	= true;
 			sbg.enterState(Game.go);
 		}
 		
-		/* Load new chunks
-		if(playerX > (chunkLoad * BLOCK_WIDTH * 16)){// * chunksLoaded) {
-			//loadChunks();
-			playerX	-= (chunkLoad * BLOCK_WIDTH * 16);
-			cameraX	-= (chunkLoad * BLOCK_WIDTH * 16);
-		}*/
+		// Load new chunks
+		if(playerX > (chunksLoaded * chunkLoad * BLOCK_WIDTH * 16)) {// * chunksLoaded) {
+			loadChunks();
+			
+			// Give the player extra super-jumps to compensate for the new-chunk bug
+			extraJumps	+= 3;
+			//playerX	-= (chunkLoad * BLOCK_WIDTH * 16);
+			//cameraX	-= (chunkLoad * BLOCK_WIDTH * 16);
+		}
 	}
 	
 	public static void sleep(int t) {
